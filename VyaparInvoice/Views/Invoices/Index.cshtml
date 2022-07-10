@@ -1,0 +1,124 @@
+﻿@model IEnumerable<VyaparInvoice.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />*@
+@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/datatables.bootstrap5.min.js"></script>*@
+<p class="pageTitle">Invoices</p>
+<br/>
+<table class="table table-striped" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                Invoice No.
+            </th>
+            <th>
+                Client Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                GST/UIN
+            </th>
+            <th>
+                Total Amount
+            </th>
+            <th>
+                CGST
+            </th>
+            <th>
+                SGST
+            </th>
+            <th>
+                Final Amount
+            </th>
+            <th>
+                Date
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var date = item.Date.ToShortDateString();
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientPhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientGSTNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxableAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CGST)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SGST)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayableAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => date)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background:none; border:0; outline:0" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="color:#c2d82e" class="fa fa-2x fa-gear"></i>
+                        </button>
+                        <div style="padding:5px 5px 5px 10px !important" class="dropdown-menu shadow animated--grow-in">
+                            <a class="dropdown-item" href="javascript:submitPrintForm('@item.Id')">
+                                <i class="fas fa-print"></i>
+                                Print Invoice
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            @*<a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </a><hr style="border-top: 1px solid #eee; margin:0">*@
+                            <a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="fas fa-trash"></i>
+                                Delete Record
+                            </a>
+                        </div>
+                    </div>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@foreach (var item in Model)
+{
+    var formPrintId = "formPrintId" + item.Id;
+    <form method="post" asp-action="PrintInvoice" id="@formPrintId">
+        <input type="hidden" name="id" value="@item.Id">
+    </form>
+}
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+
+    function submitPrintForm(id) {
+        $('#formPrintId' + id).submit();
+    }
+</script>

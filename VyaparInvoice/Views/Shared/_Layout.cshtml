@@ -1,0 +1,325 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@using VyaparInvoice.Constants
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VyaparInvoice</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VyaparInvoice</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Invoices" asp-action="Index">Invoice</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Chalaans" asp-action="Index">Chalaan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Units" asp-action="Index">Units</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Profiles" asp-action="Index">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="GenerateInvoice" asp-action="Index">Generate Invoice</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+
+        </main>
+    </div>-->
+@*<footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - VyaparInvoice - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+
+<!--<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html class="no-js " lang="en">
+<head>
+
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Site Meta -->
+    <title>Vyapaar Invoice</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+
+    <!-- SLIDER STYLES -->
+    <link rel="stylesheet" type="text/css" href="/revolution/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+    <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
+    <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
+
+    <!-- Custom & Default Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/carousel.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <link href="~/lib/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <script src="~/lib/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="~/lib/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+
+    @*<link rel="stylesheet" href="~/DataTables/datatables.css">
+        <script src="~/DataTables/datatables.js"></script>*@
+    <!--[if lt IE 9]>
+        <script src="js/vendor/html5shiv.min.js"></script>
+        <script src="js/vendor/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div id="wrapper">
+
+        <section id="header" class="light-header">
+            <header class="header">
+                <div class="navMain">
+                    <nav class="navbar navbar-default yamm">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="logo-normal">
+                                <a class="navbar-brand" href="/"><img style="width:60%; height:auto" src="/images/logo.png" alt=""></a>
+                            </div>
+                        </div>
+
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Invoices" asp-action="Index">Invoice</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Chalaans" asp-action="Index">Chalaan</a>
+                                    </li>
+                                    @if (AuthorizationService.AuthorizeAsync(User, Permissions.Products.Default).Result.Succeeded)
+                                    {
+                                        <li>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Units" asp-action="Index">Units</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Profiles" asp-action="Index">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="GenerateInvoice" asp-action="Index">Generate Invoice</a>
+                                    </li>
+                                    <li class="nav-link text-dark">
+                                        <a class="nav-link text-dark" href="javascript:logoutFn()">Logout</a>
+                                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                            <button type="submit" id="logoutBtn" class="nav-link btn btn-link text-dark" style="display:none">Logout</button>
+                                        </form>
+                                    </li>
+                                }
+                                <!--else
+                                {-->
+                                    @*<li>
+                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                    </li>*@
+                                    <!--<li>
+                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    </li>
+                                }-->
+                            </ul>
+                            @*<partial name="_LoginPartial" />*@
+                        </div><!--/.nav-collapse -->
+                    </nav>
+                </div>
+            </header><!-- /header -->
+        </section>
+
+        @*<section class="innerpage_top_section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Testimonials</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>*@
+
+        <section class="section">
+            <main role="main">
+                @RenderBody()
+            </main>
+            <!--<div class="container">
+                <div class="section-title text-center">
+                    <p>Maecenas sit amet tristique turpis. Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
+                </div>-->
+            <!-- end title -->
+            <!--<div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial">
+                        <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
+                        <p class="testiname"><strong><img src="images/upload/testimonial_01.png" alt="" class="img-circle"> Jenny LUXURY</strong></p>
+                    </div>-->
+            <!-- end testimonial -->
+            <!--</div>--><!-- end col -->
+            <!--<div class="col-md-4">
+                <div class="testimonial">
+                    <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
+                    <p class="testiname"><strong><img src="images/upload/testimonial_02.png" alt="" class="img-circle"> Martin LEO</strong></p>
+                </div>-->
+            <!-- end testimonial -->
+            <!--</div>--><!-- end col -->
+            <!--<div class="col-md-4">
+                <div class="testimonial">
+                    <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. Donec consectetur accumsan arcu, sit amet fringilla ex ultricies.</p>
+                    <p class="testiname"><strong><img src="images/upload/testimonial_03.png" alt="" class="img-circle"> John DOE</strong></p>
+                </div>-->
+            <!-- end testimonial -->
+            <!--</div>--><!-- end col -->
+            <!--</div>--><!-- end row -->
+            <!--</div>--><!-- end container -->
+        </section>
+
+        <!--<section class="section db">-->
+        <!--<div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <div class="stat-count">
+                        <h4 class="stat-timer">1230</h4>
+                        <h3><i class="flaticon-emoticon-square-smiling-face-with-closed-eyes"></i> Happy Customers  </h3>
+                        <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. </p>
+                    </div>-->
+        <!-- stat-count -->
+        <!--</div>--><!-- end col -->
+        <!--<div class="col-lg-4 col-md-4">
+            <div class="stat-count">
+                <h4 class="stat-timer">331</h4>
+                <h3><i class="flaticon-briefcase"></i> Projects Done</h3>
+                <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. </p>
+            </div>-->
+        <!-- stat-count -->
+        <!--</div>--><!-- end col -->
+        <!--<div class="col-lg-4 col-md-4">
+            <div class="stat-count">
+                <h4 class="stat-timer">8901</h4>
+                <h3><i class="flaticon-coffee-cup"></i> Ordered Coffe's</h3>
+                <p>Quisque porttitor eros quis leo pulvinar, at hendrerit sapien iaculis. </p>
+            </div>-->
+        <!-- stat-count -->
+        <!--</div>--><!-- end col -->
+        <!--</div>--><!-- end row -->
+        <!--</div>--><!-- end container -->
+        <!--</section>-->
+
+        <footer class="section footer light-footer">
+            <hr />
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="contact-details">
+                            <img style="width:250px" src="/images/logo.png" alt="#">
+                            <p>Email: <a href="mailto:#">info.vyapaarinvoice@gmail.com</a></p>
+                            @*<p>Phone: + 9876 543 210</p>
+                                <ul class="list-inline social-links">
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                </ul>*@
+                            <p><strong>Copyrights © 2022 All Rights Reserved by Vyapaar Invoice</strong>
+                        </div><!-- end details -->
+                    </div><!-- end light-footer -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </footer><!-- end footer -->
+    </div><!-- end wrapper -->
+    <!-- jQuery Files -->
+
+    <script src="/js/bootstrap.min.js"></script>
+    @*<script src="js/carousel.js"></script>
+        <script src="js/parallax.js"></script>*@
+    <script src="/js/progress.js"></script>
+    <script src="/js/custom.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    @await RenderSectionAsync("Scripts", required: false)
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+
+</body>
+</html>
+
+<script>
+    function logoutFn() {
+        $('#logoutBtn').click();
+    }
+</script>

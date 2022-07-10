@@ -1,0 +1,137 @@
+﻿@model IEnumerable<VyaparInvoice.Models.Profile>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    td, th {
+        padding: 20px 20px 5px 0px;
+    }
+</style>
+<p class="pageTitle">Profile</p>
+<br />
+
+@if (Model.Count() == 0)
+{
+    <h3>
+        Your Profile Creation is Incomplete
+    </h3>
+    <p>
+        To create your profile, click the link beside <a asp-action="Create">Create New</a> .
+    </p>
+}
+else
+{
+    <div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5 m-auto">
+                <table>
+                    <tr>
+                        <th>
+                            Company Name
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().CompanyName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            State
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().State)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            City
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().City)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Address
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().Address)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Email
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Phone Number
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().PhoneNumber)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-5 m-auto">
+                <table>
+                    <tr>
+                        <th>
+                            Alternate Phone Number
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().AlternatePhoneNumber)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            GSTIN/UIN
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().GSTINORUIN)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            State Tax
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().StateTax)%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Central Tax
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.First().CentralTax)%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Logo
+                        </th>
+                        <td>
+                            <img src="@Model.First().Logo" width="10%" height="auto" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <br/>
+    <div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-11">
+                <a asp-action="Edit" asp-route-id="@Model.First().Id">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+}

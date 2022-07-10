@@ -1,0 +1,176 @@
+﻿@model VyaparInvoice.Models.GenerateInvoiceViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<p class="pageTitle">Generate Invoice</p>
+<br />
+<div>
+    <div>
+        @*<form asp-action="Create" enctype="multipart/form-data">*@
+        <form asp-action="Create" enctype="multipart/form-data" id="invoiceForm">
+            @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="clientName" class="control-label">Client Name<span style="color:red">*</span></label>
+                        <input type="text" class="form-control" required id="clientName" name="clientName" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="clientEmail" class="control-label">Email</label>
+                        <input type="email" class="form-control" id="clientEmail" name="clientEmail" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="clientPhone" class="control-label">Phone Number</label>
+                        <input type="text" class="form-control" id="clientPhone" name="clientPhone" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="clientAddress" class="control-label">Client Address</label>
+                        <textarea class="form-control" id="clientAddress" name="clientAddress"></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="clientGSTNumber" class="control-label">Client GST/UIN</label>
+                        <input type="text" class="form-control" id="clientGSTNumber" name="clientGSTNumber" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="items">
+                <div class="row" id="row0">
+                    <div class="col-md-2">
+                        <label for="productName0" class="control-label">Product</label>
+                        <select class="form-control" id="productName0" name="productName[]" onchange="setRate(0)" searchable="Search here..">
+                            @foreach (var product in Model.Products.OrderBy(x => x.Name))
+                            {
+                                <option value="@product.Name" id="@product.Id">@product.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="unit0" class="control-label">Unit</label>
+                        <select class="form-control" id="unit0" name="unit[]" onchange="setRate(0)">
+                            @foreach (var unit in Model.Units)
+                            {
+                                <option value="@unit.Name" id="@unit.Id">@unit.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="rate0" class="control-label">Rate</label>
+                        <input type="text" class="form-control" readonly id="rate0" name="rate[]" />
+                    </div>
+                    <div class="col-md-1">
+                        <label for="quantity0" class="control-label">Qty<span style="color:red">*</span></label>
+                        <input type="number" min="1" class="form-control" id="quantity0" name="quantity[]" value="1" required onchange="setRate(0)" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="amount0" class="control-label">Amount</label>
+                        <input type="text" class="form-control" readonly id="amount0" name="amount[]" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="hsn0" class="control-label">HSN/SAC</label>
+                        <input type="text" class="form-control" id="hsn0" name="hsn[]" />
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="differentiator" id="differentiator" value="" />
+            <br/>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="button" value="Add New Item" id="addItem" class="btn btn-block btn-primary" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" id="chalaanBtn" value="Generate Chalaan" class="btn btn-block btn-warning" onclick="setDifferentiator(this)" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" id="invoiceBtn" value="Generate Invoice" class="btn btn-block btn-success" onclick="setDifferentiator(this)" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var rates = JSON.parse('@Json.Serialize(Model.Rates)');
+    var products = JSON.parse('@Json.Serialize(Model.Products)');
+    var units = JSON.parse('@Json.Serialize(Model.Units)');
+    setRate(0);
+    function setRate(index) {
+        var productPrice;
+        productPrice = rates.find(x => x.productId == $('#productName'+index).children().toArray().find(x => x.selected).id && x.unitId == $('#unit'+index).children().toArray().find(x => x.selected).id).price;
+        $('#rate'+index).val(productPrice);
+        $('#amount'+index).val(parseInt(productPrice) * parseInt($('#quantity'+index).val()));
+    }
+    var row_Count = 1;
+    $('#addItem').on('click', () => {
+        var str = "";
+        str += `<br/><div class="row" id="row${row_Count}">`;
+        str += `<div class="col-md-2">
+                    <label for="productName${row_Count}" class="control-label">Product</label>
+                    <select class="form-control" id = "productName${row_Count}" name = "productName[]" onchange = "setRate(${row_Count})" ></select>
+                </div>`;
+        str += `<div class="col-md-2">
+                    <label for="unit${row_Count}" class="control-label">Unit</label>
+                    <select class="form-control" id="unit${row_Count}" name="unit[]" onchange="setRate(${row_Count})">
+                    </select>
+                </div>`;
+
+        str += `<div class="col-md-2">
+                    <label for="rate${row_Count}" class="control-label">Rate</label>
+                    <input type="text" class="form-control" readonly id="rate${row_Count}" name="rate[]" />
+                </div>
+                <div class="col-md-1">
+                    <label for="quantity${row_Count}" class="control-label">Qty<span style="color:red">*</span></label>
+                    <input type="number" min="1" class="form-control" id="quantity${row_Count}" name="quantity[]" value="1" required onchange="setRate(${row_Count})" />
+                </div>
+                <div class="col-md-2">
+                    <label for="amount${row_Count}" class="control-label">Amount</label>
+                    <input type="text" class="form-control" readonly id="amount${row_Count}" name="amount[]" />
+                </div>
+                <div class="col-md-2">
+                    <label for="hsn${row_Count}" class="control-label">HSN/SAC</label>
+                    <input type="text" class="form-control" id="hsn${row_Count}" name="hsn[]" />
+                </div>`
+        str += `<div class="col-md-1"><br/><button type="button" style="position:relative; bottom:2px; padding: 10px 20px;" class="btn btn-sm btn-danger" id="remove${row_Count}" onclick="removeItem(this)"><i class="fa fa-trash"></i></button></div>`;
+        str += `</div>`;
+        $('#items').append(str);
+
+        var productStr = '';
+        products.sort(function (a, b) { return a.name.localeCompare(b.name) })
+            .forEach(x => productStr += `<option value="${x.name}" id="${x.id}">${x.name}</option>`);
+        $(`#productName${row_Count}`).html(productStr);
+
+        var unitStr = '';
+        units.forEach(x => unitStr += `<option value="${x.name}" id="${x.id}">${x.name}</option>`);
+        $(`#unit${row_Count}`).html(unitStr);
+
+        setRate(row_Count);
+        row_Count++;
+    });
+
+    function removeItem(e) {
+        e.parentNode.parentNode.remove();
+    }
+    var blankQuantity = false;
+    function setDifferentiator(e) {
+        blankQuantity = false;
+        $("[name='quantity[]']").toArray().forEach(x => { if (x.value == "" || x.value == null) { blankQuantity = true; } });
+
+        if ($("#clientName").val() == "" || $("#clientName").val() == null) {
+            toastr.error('Client Name is Mandatory');
+        }
+        else if (blankQuantity) {
+            toastr.error('Quantity of each product is Mandatory');
+        }
+        
+        else {
+            e.id == "chalaanBtn" ? $("#differentiator").val("chalaan") : $("#differentiator").val("invoice");
+            toastr.success('Generating, Please Wait...!');
+            $("#invoiceForm").submit();
+        }
+    }
+</script>

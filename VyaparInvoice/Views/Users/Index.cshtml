@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+
+<p class="pageTitle">Users</p>
+<br/>
+@*<div class="row">
+    <div class="col-sm-10">
+        
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-primary" onclick="window.open('/Users/Create','_self')"><i class="fa fa-plus"></i> User</button>
+    </div>
+</div>*@
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped" id="userTable">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th style="width:10%">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background:none; border:0; outline:0" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="color:#c2d82e" class="fa fa-2x fa-gear"></i>
+                        </button>
+                        <div class="dropdown-menu shadow animated--grow-in">
+                            <a style="margin-right:16px" asp-controller="userroles" asp-action="Index" asp-route-userId="@user.Id" class="dropdown-item">
+                                <i class="fas fa-wrench"></i>
+                                Manage Roles
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            <a style="margin-right:16px" asp-controller="Users" asp-action="ChangePassword" asp-route-id="@user.Id" class="dropdown-item">
+                                <i class="fas fa-lock"></i>
+                                Change Password
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            <a style="margin-right:16px" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" class="dropdown-item">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $("#userTable").DataTable();
+    });
+
+</script>

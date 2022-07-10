@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+
+<p class="pageTitle">Roles</p>
+<br />
+<table class="table table-striped" id="userTable">
+    <thead>
+        <tr>
+            <th>Role Name</th>
+            <th style="width:10%">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background:none; border:0; outline:0" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="color:#c2d82e" class="fa fa-2x fa-gear"></i>
+                        </button>
+                        <div class="dropdown-menu shadow animated--grow-in">
+                            <a class="dropdown-item">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            <form class="d-inline">
+                                <a class="dropdown-item">
+                                    <i class="fas fa-trash-alt"></i>
+                                    Delete
+                                </a>
+                            </form>
+                            @if (role.Name != "Admin")
+                            {<hr style="border-top: 1px solid #eee; margin:0">
+                                <a style="margin-right:16px" asp-controller="Permission" asp-action="Index" asp-route-roleId="@role.Id" class="dropdown-item">
+                                    <i class="fas fa-wrench"></i>
+                                    Manage Permissions
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#userTable").DataTable();
+    });
+
+</script>

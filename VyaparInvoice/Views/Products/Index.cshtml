@@ -1,0 +1,73 @@
+﻿@model IEnumerable<VyaparInvoice.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>*@
+
+<p class="pageTitle">Products</p>
+<br />
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped" id="myTable">
+    <thead>
+        <tr>
+            <th>Sr. No.</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ var loop_Count = 0;}
+        @foreach (var item in Model)
+        {
+            loop_Count++;
+            <tr>
+                <td>@loop_Count</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" style="background:none; border:0; outline:0" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i style="color:#c2d82e" class="fa fa-2x fa-gear"></i>
+                        </button>
+                        <div style="padding:5px 5px 5px 10px !important" class="dropdown-menu shadow animated--grow-in">
+                            <a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            <a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id">
+                                <i class="fas fa-info-circle"></i>
+                                View Details
+                            </a><hr style="border-top: 1px solid #eee; margin:0">
+                            <a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="fas fa-trash"></i>
+                                Delete Record
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>

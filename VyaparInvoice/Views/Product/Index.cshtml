@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@using VyaparInvoice.Constants
+<h1>Product Management</h1>
+@if(AuthorizationService.AuthorizeAsync(User, Permissions.Products.Default).Result.Succeeded)
+{
+    <h3>You have Permission</h3>
+}

@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .footer {
+            margin-top: 30px;
+        }
+
+        .footer-info {
+            float: none;
+            position: running(footer);
+            margin-top: -25px;
+        }
+
+        .page-container {
+            display: block;
+            position: running(pageContainer);
+            margin-top: -25px;
+            font-size: 12px;
+            text-align: right;
+            color: #999;
+        }
+
+            .page-container .page::after {
+                content: counter(page);
+            }
+
+            .page-container .pages::after {
+                content: counter(pages);
+            }
+
+
+        @page {
+            @bottom-right {
+                content: element(pageContainer);
+            }
+
+            @bottom-left {
+                content: element(footer);
+            }
+        }
+
+        body {
+            font-size: 16px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            table tr td {
+                padding: 0;
+                text-align:center;
+            }
+
+        /*table tr td:last-child {
+            text-align: right;
+        }*/
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .large {
+            font-size: 1.75em;
+        }
+
+        .small {
+            font-size: 1.20em;
+        }
+
+        .total {
+            font-weight: bold;
+            /*color: #fb7578;*/
+        }
+
+        .logo-container {
+            margin: 20px 0 10px 0;
+        }
+
+        .invoice-info-container {
+            font-size: 0.875em;
+        }
+
+        .invoiceNumberDate {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .client {
+            position: fixed;
+            right: 20px;
+            top: 100px;
+        }
+
+        /*.companyAddress, .clientAddress {
+            font-size: 16px
+        }*/
+
+        .invoice-info-container td {
+            padding: 4px 0;
+        }
+
+        .client-name {
+            font-size: 1.2em;
+            vertical-align: top;
+        }
+
+        .line-items-container {
+            margin: 70px 0;
+            font-size: 0.875em;
+        }
+
+            .line-items-container th {
+                text-align: center;
+                color: #777;
+                /*border-bottom: 2px solid #ddd;*/
+                padding: 10px 0 15px 0;
+                font-size: 0.85em;
+                text-transform: uppercase;
+            }
+
+            /*.line-items-container th:last-child {
+            text-align: right;
+        }*/
+
+            .line-items-container td {
+                padding: 15px 0;
+            }
+
+            .line-items-container tbody tr:first-child td {
+                padding-top: 25px;
+            }
+
+            .line-items-container.has-bottom-border tbody tr:last-child td {
+                padding-bottom: 25px;
+                /*border-bottom: 2px solid #ddd;*/
+            }
+
+            .line-items-container.has-bottom-border {
+                margin-bottom: 0;
+            }
+
+        /*.line-items-container th.heading-quantity {
+        width: 50px;
+    }
+
+    .line-items-container th.heading-price {*/
+        /*text-align: right;*/
+        /*width: 100px;
+    }
+
+    .line-items-container th.heading-subtotal {
+        width: 100px;
+    }*/
+
+        .payment-info {
+            width: 38%;
+            font-size: 0.75em;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 100px;
+        }
+
+        .footer-thanks {
+            font-size: 1.125em;
+        }
+
+            .footer-thanks img {
+                display: inline-block;
+                position: relative;
+                top: 1px;
+                width: 16px;
+                margin-right: 4px;
+            }
+
+        .footer-info {
+            float: right;
+            margin-top: 5px;
+            font-size: 0.75em;
+            color: #ccc;
+        }
+
+            .footer-info span {
+                padding: 0 5px;
+                color: black;
+            }
+
+                .footer-info span:last-child {
+                    padding-right: 0;
+                }
+
+        .page-container {
+            display: none;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="page-container">
+        Page
+        <span class="page"></span>
+        of
+        <span class="pages"></span>
+    </div>
+
+    <div class="invoiceNumberDate">
+        Chalaan No: <strong>chalaanNo</strong> , Date: <strong>date</strong>
+    </div>
+
+    <div class="logo-container">
+        <img style="height: 70px" src="imagePath" />
+    </div>
+    <div class="companyAddress">
+        <p>
+            <span class="client-name">
+                company_Name<br />
+            </span>
+            <span>
+                company_Address<br />company_city<br />company_state<br />
+            </span>
+            <span>
+                E-Mail : companyEmail<br/>
+            </span>
+            <span>
+                Phone : companyPhone
+            </span>
+        </p>
+    </div>
+    <div class="client">
+        Buyer : 
+        <span class="client-name">
+            Client_Name
+        </span>
+        <div class="clientAddress">
+                <span>
+                    client_Address<br/>
+                </span>
+                <span>
+                    E-Mail : clientEmail<br/>
+                </span>
+                <span>
+                    Phone : clientPhone
+                </span>
+            
+        </div>
+    </div>
+
+    <table class="line-items-container" rules="all" frame="box">
+        <thead>
+            <tr>
+                <th>Sr.No.</th>
+                <th>Description of Goods</th>
+                <th>Price</th>
+                <th>Per</th>
+                <th>Qty</th>
+                <th>Sub Total</th>
+                <th>HSN/SAC</th>
+            </tr>
+        </thead>
+        <tbody>
+            tableTag
+            <!--<tr>
+                <td>1</td>
+                <td>Blue large widgets</td>
+                <td>&#8377;15.00</td>
+                <td>1 Kg</td>
+                <td>2</td>
+                <td class="bold">&#8377;30.00</td>
+                <td>211211211</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Green medium widgets</td>
+                <td>&#8377;10.00</td>
+                <td>500 gms</td>
+                <td>4</td>
+                <td class="bold">&#8377;40.00</td>
+                <td>211211211</td>
+            </tr>-->
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div class="footer-thanks" align="center">
+            <img src="heartImage" alt="heart">
+            <span>Thank you!</span>
+        </div>
+    </div>
+</body>
+</html>

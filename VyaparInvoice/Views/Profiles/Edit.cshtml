@@ -1,0 +1,106 @@
+﻿@model VyaparInvoice.Models.Profile
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<script src="~/js/IndianStatesCities.js"></script>
+
+<p class="pageTitle">Profile</p>
+
+<h1>Edit</h1>
+
+<hr />
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group col-md-4">
+            <label asp-for="CompanyName" class="control-label">Company Name</label>
+            <input asp-for="CompanyName" class="form-control" required />
+            <span asp-validation-for="CompanyName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="State" class="control-label">State</label>
+            <select asp-for="State" id="state" class="form-control"></select>
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="City" class="control-label">City</label>
+            <select asp-for="City" id="city" class="form-control"></select>
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Address" class="control-label"></label>
+            <textarea asp-for="Address" class="form-control" required></textarea>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="ImageFile" class="control-label"></label>
+            <input asp-for="ImageFile" accept="image/*" class="form-control" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <img src="@Model.Logo" width="20%" height="auto" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+            <input asp-for="PhoneNumber" class="form-control" required />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="AlternatePhoneNumber" class="control-label">Alternate Phone Number</label>
+            <input asp-for="AlternatePhoneNumber" class="form-control" />
+            <span asp-validation-for="AlternatePhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="GSTINORUIN" class="control-label">GSTIN/UIN</label>
+            <input asp-for="GSTINORUIN" class="form-control" required />
+            <span asp-validation-for="GSTINORUIN" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="CentralTax" class="control-label">Central Tax</label>
+            <input asp-for="CentralTax" class="form-control" min="1" required />
+            <span asp-validation-for="CentralTax" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="StateTax" class="control-label">State Tax</label>
+            <input asp-for="StateTax" class="form-control" min="1" required />
+            <span asp-validation-for="StateTax" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="CreatorUserId" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <a asp-action="Index">Back to Profile</a>
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    setState($('#state'), $('#city'));
+    $('#state').val('@Model.State');
+    setCity($('#state').val(), $('#city'));
+    $('#city').val('@Model.City');
+    $('#state').on('change', () => {
+        setCity($('#state').val(), $('#city'));
+    })
+</script>
